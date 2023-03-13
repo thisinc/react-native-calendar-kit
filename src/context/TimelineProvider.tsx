@@ -47,6 +47,7 @@ interface TimelineCalendarContextValue extends CustomTimelineProviderProps {
   hours: { text: string; hourNumber: number }[];
   initialDate: React.MutableRefObject<string>;
   dayBarListRef: React.RefObject<FlashList<string>>;
+  allDayBarListRef: React.RefObject<FlashList<string>>;
   timelineHorizontalListRef: React.RefObject<FlashList<string>>;
   timelineVerticalListRef: React.RefObject<ScrollView>;
   timelineLayoutRef: React.MutableRefObject<{
@@ -129,6 +130,7 @@ const TimelineProvider: React.FC<TimelineProviderProps> = (props) => {
 
   /** Refs */
   const dayBarListRef = useRef<FlashList<string>>(null);
+  const allDayBarListRef = useRef<FlashList<string>>(null);
   const timelineHorizontalListRef = useRef<FlashList<string>>(null);
   const timelineVerticalListRef = useRef<ScrollView>(null);
   const initialDate = useRef(initDate);
@@ -217,6 +219,7 @@ const TimelineProvider: React.FC<TimelineProviderProps> = (props) => {
       firstDay,
       viewMode,
       dayBarListRef,
+      allDayBarListRef,
       timelineHorizontalListRef,
       timelineVerticalListRef,
       timelineLayoutRef,

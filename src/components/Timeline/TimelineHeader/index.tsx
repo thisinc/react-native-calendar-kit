@@ -218,7 +218,7 @@ const TimelineHeader = ({
       {selectedEventId && <View style={styles.disabledFrame} />}
       {viewMode !== 'day' && events && Object.keys(events).length > 0 && (
         <AllDayBar
-          height={40}
+          height={46}
           events={events}
           renderEventContent={renderEventContent}
         />

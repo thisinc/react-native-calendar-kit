@@ -39,14 +39,17 @@ const MultipleDayBar = ({
       >
         {!!events?.[dayIndex]?.length && (
           <ScrollView scrollEnabled horizontal={false}>
-            {events?.[dayIndex]?.map((event) => (
-              <View key={event.id} style={styles.defaultEventWrapper}>
-                {renderEventContent ? (
-                  renderEventContent?.(event, eventHeight)
-                ) : (
-                  <DefaultAllDayEvent event={event} />
-                )}
-              </View>
+            {events?.[dayIndex]?.map((event, index, list) => (
+              <React.Fragment key={event.id}>
+                <View style={styles.defaultEventWrapper}>
+                  {renderEventContent ? (
+                    renderEventContent?.(event, eventHeight)
+                  ) : (
+                    <DefaultAllDayEvent event={event} />
+                  )}
+                </View>
+                {index !== list.length - 1 && <View style={styles.separator} />}
+              </React.Fragment>
             ))}
           </ScrollView>
         )}
@@ -85,7 +88,9 @@ const styles = StyleSheet.create({
   defaultEventWrapper: {
     height: EVENT_HEIGHT,
     marginRight: 8,
-    marginBottom: 4,
+  },
+  separator: {
+    height: 2,
   },
   allDayEventContentContainer: {
     height: EVENT_HEIGHT,

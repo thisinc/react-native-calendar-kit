@@ -54,6 +54,7 @@ const MultipleDayBar = ({
             {events?.[dayIndex]?.map((event, index, list) => (
               <React.Fragment key={event.id}>
                 <TouchableOpacity
+                  activeOpacity={0.6}
                   style={styles.defaultEventWrapper}
                   onPress={() => onPressEvent?.(event)}
                 >

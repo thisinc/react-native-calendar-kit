@@ -37,10 +37,6 @@ const MultipleDayBar = ({
 }) => {
   const eventHeight = useSharedValue(EVENT_HEIGHT);
 
-  // const handleEventPress = useCallback(() => {
-  //   onPressEvent
-  // }, []);
-
   const _renderDay = (dayIndex: number) => {
     return (
       <View

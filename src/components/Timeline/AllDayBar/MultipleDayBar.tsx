@@ -1,6 +1,12 @@
 import times from 'lodash/times';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SharedValue, useSharedValue } from 'react-native-reanimated';
 import { COLUMNS } from '../../../constants';
 import type { CalendarViewMode, PackedEvent } from '../../../types';
@@ -14,6 +20,7 @@ const MultipleDayBar = ({
   viewMode,
   startDate,
   events,
+  onPressEvent,
   renderEventContent,
 }: {
   width: number;
@@ -22,12 +29,17 @@ const MultipleDayBar = ({
   columnWidth: number;
   viewMode: CalendarViewMode;
   events: PackedEvent[][];
+  onPressEvent?: (event: PackedEvent) => void;
   renderEventContent?: (
     event: PackedEvent,
     timeIntervalHeight: SharedValue<number>
   ) => JSX.Element;
 }) => {
   const eventHeight = useSharedValue(EVENT_HEIGHT);
+
+  // const handleEventPress = useCallback(() => {
+  //   onPressEvent
+  // }, []);
 
   const _renderDay = (dayIndex: number) => {
     return (
@@ -41,13 +53,16 @@ const MultipleDayBar = ({
           <ScrollView scrollEnabled horizontal={false}>
             {events?.[dayIndex]?.map((event, index, list) => (
               <React.Fragment key={event.id}>
-                <View style={styles.defaultEventWrapper}>
+                <TouchableOpacity
+                  style={styles.defaultEventWrapper}
+                  onPress={() => onPressEvent?.(event)}
+                >
                   {renderEventContent ? (
                     renderEventContent?.(event, eventHeight)
                   ) : (
                     <DefaultAllDayEvent event={event} />
                   )}
-                </View>
+                </TouchableOpacity>
                 {index !== list.length - 1 && <View style={styles.separator} />}
               </React.Fragment>
             ))}

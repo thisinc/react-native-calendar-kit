@@ -279,8 +279,6 @@ const useDragCreateGesture = ({
     const posX = leftWithHourColumn;
     const posY = defaultTopPosition;
 
-    console.log('INITIATE DRAG ITEM: ', posY, posX, offsetY.value);
-
     dragXPosition.value = posX;
     dragYPosition.value = posY;
     startOffsetY.current = offsetY.value;

@@ -83,7 +83,6 @@ export const DragEditItem = ({
   };
 
   const animatedStyles = useAnimatedStyle(() => {
-    console.log(event);
     return {
       height: event.duration * timeIntervalHeight.value,
       transform: [{ translateX: offsetX.value }, { translateY: offsetY.value }],

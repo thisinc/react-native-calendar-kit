@@ -33,7 +33,7 @@ import type {
   TimelineProps,
 } from '../../types';
 import { clampValues, groupEventsByDate } from '../../utils';
-import DragCreateItem, { DragEditItem } from './DragCreateItem';
+import DragCreateItem from './DragCreateItem';
 import TimelineHeader from './TimelineHeader';
 import TimelineSlots from './TimelineSlots';
 
@@ -342,7 +342,7 @@ const Timeline: React.ForwardRefRenderFunction<
           />
         )}
         {isDraggingCreate && !!draggingEvent && (
-          <DragEditItem
+          <DragCreateItem
             event={draggingEvent}
             offsetX={dragXPosition}
             offsetY={dragYPosition}

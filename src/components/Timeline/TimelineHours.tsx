@@ -66,9 +66,7 @@ const HourItem = ({
   theme: ThemeProperties;
 }) => {
   const hourLabelStyle = useAnimatedStyle(() => {
-    return {
-      top: timeIntervalHeight.value * index - 6 + spaceContent,
-    };
+    return { top: timeIntervalHeight.value * index - 6 + spaceContent };
   });
 
   return (

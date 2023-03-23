@@ -272,6 +272,7 @@ const useDragCreateGesture = ({
 
   const onLongEditEvent = (event: PackedEvent) => {
     isDragCreateActive.value = true;
+    currentHour.value = event.startHour;
     setDraggingEvent(event);
     const leftWithHourColumn = event.leftByIndex!;
     const defaultTopPosition = event.top + spaceFromTop - offsetY.value;

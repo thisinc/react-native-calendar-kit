@@ -101,7 +101,15 @@ const AllDayBar = ({
       renderEventContent,
       renderAllDayBarLeftSection,
     }),
-    [locale, theme, currentDate, events, start, renderEventContent, renderAllDayBarLeftSection]
+    [
+      locale,
+      theme,
+      currentDate,
+      events,
+      start,
+      renderEventContent,
+      renderAllDayBarLeftSection,
+    ]
   );
 
   const _renderDayBarList = () => {
@@ -120,7 +128,7 @@ const AllDayBar = ({
 
     return (
       <View style={styles.multipleDayContainer}>
-        {renderAllDayBarLeftSection && renderAllDayBarLeftSection()}
+        {!!renderAllDayBarLeftSection && renderAllDayBarLeftSection()}
         {!renderAllDayBarLeftSection && (
           <View
             style={[
@@ -169,7 +177,7 @@ const AllDayBar = ({
     return (
       <View style={styles.multipleDayContainer}>
         <View style={{ width: hourWidth }}>
-          {renderAllDayBarLeftSection && renderAllDayBarLeftSection()}
+          {!!renderAllDayBarLeftSection && renderAllDayBarLeftSection()}
         </View>
         {_renderMultipleDayItem({
           item: startDate,

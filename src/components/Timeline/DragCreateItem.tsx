@@ -15,12 +15,19 @@ interface DragCreateItemProps {
   offsetX: SharedValue<number>;
   offsetY: SharedValue<number>;
   currentHour: SharedValue<number>;
+  event?: PackedEvent;
+  renderEventContent?: (
+    event: PackedEvent,
+    timeIntervalHeight: SharedValue<number>
+  ) => JSX.Element;
 }
 
-const DragCreateItem = ({
+export const DragCreateItem = ({
   offsetX,
   offsetY,
   currentHour,
+  event,
+  renderEventContent,
 }: DragCreateItemProps) => {
   const {
     columnWidth,
@@ -33,58 +40,9 @@ const DragCreateItem = ({
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      height: (dragCreateInterval / 60) * timeIntervalHeight.value,
-      transform: [{ translateX: offsetX.value }, { translateY: offsetY.value }],
-    };
-  });
-
-  return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
-      <Animated.View
-        style={[
-          styles.defaultStyle,
-          {
-            left: hourWidth,
-            backgroundColor: theme.dragCreateItemBackgroundColor,
-            width: columnWidth,
-          },
-          animatedStyles,
-        ]}
-      />
-      <AnimatedHour
-        currentHour={currentHour}
-        offsetY={offsetY}
-        hourWidth={hourWidth}
-        theme={theme}
-        hourFormat={hourFormat}
-      />
-    </View>
-  );
-};
-
-export const DragEditItem = ({
-  offsetX,
-  offsetY,
-  currentHour,
-  event,
-  renderEventContent,
-}: DragCreateItemProps & {
-  event: PackedEvent;
-  renderEventContent?: (
-    event: PackedEvent,
-    timeIntervalHeight: SharedValue<number>
-  ) => JSX.Element;
-}) => {
-  const { columnWidth, hourWidth, timeIntervalHeight, theme, hourFormat } =
-    useTimelineCalendarContext();
-
-  const _renderEventContent = () => {
-    return <Text style={[styles.title, theme.eventTitle]}>{event.title}</Text>;
-  };
-
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      height: event.duration * timeIntervalHeight.value,
+      height:
+        (event ? event.duration : dragCreateInterval / 60) *
+        timeIntervalHeight.value,
       transform: [{ translateX: offsetX.value }, { translateY: offsetY.value }],
     };
   });
@@ -97,13 +55,24 @@ export const DragEditItem = ({
           {
             left: hourWidth,
             width: columnWidth,
+            ...(!event && {
+              backgroundColor: theme.dragCreateItemBackgroundColor,
+            }),
           },
           animatedStyles,
         ]}
       >
-        {renderEventContent
-          ? renderEventContent(event, timeIntervalHeight)
-          : _renderEventContent()}
+        {event && (
+          <>
+            {!!renderEventContent &&
+              renderEventContent(event, timeIntervalHeight)}
+            {!renderEventContent && (
+              <Text style={[styles.title, theme.eventTitle]}>
+                {event.title}
+              </Text>
+            )}
+          </>
+        )}
       </Animated.View>
       <AnimatedHour
         currentHour={currentHour}

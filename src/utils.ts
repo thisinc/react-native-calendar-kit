@@ -27,8 +27,7 @@ export const calculateDates = (
   const fDow = (7 + initialFirstDay) % 7;
   const diffBefore = (minWeekDay + 7 - fDow) % 7;
 
-  const minWeekDate = minDate.subtract(diffBefore, 'd');
-  const minWeekDateUnix = minWeekDate.unix();
+  const minWeekDateUnix = minDateUnix - diffBefore * SECONDS_IN_DAY;
   let minWorkWorkDateUnix = minWeekDateUnix;
   if (diffBefore === 5) {
     minWorkWorkDateUnix = minDateUnix + 2 * SECONDS_IN_DAY;
@@ -47,7 +46,9 @@ export const calculateDates = (
     startDay = minDateUnix;
   for (let dayIndex = 0; dayIndex < totalDays; dayIndex++) {
     const currentUnix = minWeekDateUnix + dayIndex * SECONDS_IN_DAY;
-    const dateStr = minWeekDate.clone().add(dayIndex, 'd').format('YYYY-MM-DD');
+    const dateStr = moment
+      .unix(minWeekDateUnix + dayIndex * SECONDS_IN_DAY)
+      .format('YYYY-MM-DD');
     if (startDay === currentUnix) {
       if (currentUnix <= maxDateUnix) {
         day.data.push(dateStr);
